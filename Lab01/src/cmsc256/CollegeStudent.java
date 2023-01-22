@@ -1,5 +1,8 @@
 package cmsc256;
 
+/**
+ * Created by Noah Hendrickson on 1/19/2023
+ */
 public class CollegeStudent extends Person {
 
     private final String[] validLevels = {"Freshman", "Sophomore", "Junior", "Senior", "Graduate"};
