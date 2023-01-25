@@ -8,22 +8,22 @@ public class FracturedFraction implements WackyFractionInterface {
     private int numerator;
     private int denominator;
 
-    public FracturedFraction() {
+    public FracturedFraction() throws IllegalArgumentException {
         setFraction(1);
     }
 
-    public FracturedFraction(int numerator, int denominator) {
+    public FracturedFraction(int numerator, int denominator) throws IllegalArgumentException {
         setFraction(numerator, denominator);
     }
 
     @Override
-    public void setFraction(int newNumerator, int newDenominator) {
+    public void setFraction(int newNumerator, int newDenominator) throws IllegalArgumentException {
         setNumerator(newNumerator);
         setDenominator(newDenominator);
     }
 
     @Override
-    public void setFraction(int wholeInteger) {
+    public void setFraction(int wholeInteger) throws IllegalArgumentException {
         setFraction(wholeInteger, 1);
     }
 
@@ -41,7 +41,7 @@ public class FracturedFraction implements WackyFractionInterface {
      * @throws IllegalArgumentException if numerator is less than 1.
      */
     @Override
-    public void setNumerator(int numerator) {
+    public void setNumerator(int numerator) throws IllegalArgumentException {
         if (numerator < 1) throw new IllegalArgumentException("Numerator cannot be less than 1.");
         this.numerator = numerator;
     }
@@ -50,18 +50,20 @@ public class FracturedFraction implements WackyFractionInterface {
      * @throws IllegalArgumentException if denominator is less than 1.
      */
     @Override
-    public void setDenominator(int denominator) {
+    public void setDenominator(int denominator) throws IllegalArgumentException {
         if (denominator < 1) throw new IllegalArgumentException("Denominator cannot be less than 1.");
         this.denominator = denominator;
     }
 
     @Override
-    public WackyFractionInterface add(WackyFractionInterface operand) {
+    public WackyFractionInterface add(WackyFractionInterface operand) throws IllegalArgumentException {
         return new FracturedFraction(numerator + operand.getNumerator(), denominator + operand.getDenominator());
     }
 
     @Override
-    public WackyFractionInterface subtract(WackyFractionInterface operand) {
+    public WackyFractionInterface subtract(WackyFractionInterface operand) throws IllegalArgumentException, UnsupportedOperationException {
+        if (numerator - operand.getNumerator() == 0) throw new UnsupportedOperationException();
+
         return new FracturedFraction(
                 Math.abs(numerator - operand.getNumerator()),
                 Math.min(denominator, operand.getDenominator())
@@ -69,12 +71,12 @@ public class FracturedFraction implements WackyFractionInterface {
     }
 
     @Override
-    public WackyFractionInterface multiply(WackyFractionInterface operand) {
+    public WackyFractionInterface multiply(WackyFractionInterface operand) throws IllegalArgumentException {
         return new FracturedFraction(numerator * operand.getNumerator(), denominator * operand.getDenominator());
     }
 
     @Override
-    public WackyFractionInterface divide(WackyFractionInterface operand) {
+    public WackyFractionInterface divide(WackyFractionInterface operand) throws IllegalArgumentException {
         return new FracturedFraction(denominator * operand.getNumerator(), numerator * operand.getDenominator());
     }
 
@@ -93,7 +95,7 @@ public class FracturedFraction implements WackyFractionInterface {
         if (o == this) return true;
         if (!(o instanceof WackyFractionInterface)) return false;
 
-        return compareTo((WackyFractionInterface) o) == 0;
+        return this.compareTo((WackyFractionInterface) o) == 0;
     }
 
     @Override
