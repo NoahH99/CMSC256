@@ -12,6 +12,12 @@ import java.util.function.Predicate;
 
 /**
  * Created by Noah Hendrickson on 01/28/2023
+ * <br>
+ * <p>
+ * The SortingLab class is the main class that runs the program.
+ * It is responsible for initializing the Bridges API, filtering and sorting
+ * the movie data, and printing out the results.
+ * </p>
  */
 public class SortingLab {
 
@@ -42,6 +48,18 @@ public class SortingLab {
         }
     }
 
+    /**
+     * Filters a collection of movie data based on a given predicate.
+     *
+     * <p>
+     * <b>Note:</b> The type of movie data being filtered must extend ActorMovieIMDB.
+     * </p>
+     *
+     * @param <T> the type of movie data being filtered, must extend ActorMovieIMDB
+     * @param movieData the collection of movie data to be filtered
+     * @param filter the predicate used to filter the movie data
+     * @return a list of filtered movie data
+     */
     private static <T extends ActorMovieIMDB> List<T> filterMovieData(Collection<T> movieData, Predicate<T> filter) {
         List<T> filtered = new ArrayList<>();
 
@@ -54,8 +72,15 @@ public class SortingLab {
         return filtered;
     }
 
-    private static List<ActorMovieIMDB> initBridgesAPI(String username, String applId) {
-        Bridges bridges = new Bridges(3, username, applId);
+    /**
+     * Initializes the Bridges API with the given username and application ID.
+     *
+     * @param username the Bridges API username
+     * @param applicationId the Bridges API application ID
+     * @return the movie data retrieved from the Bridges API
+     */
+    private static List<ActorMovieIMDB> initBridgesAPI(String username, String applicationId) {
+        Bridges bridges = new Bridges(3, username, applicationId);
         DataSource dataSource = bridges.getDataSource();
         List<ActorMovieIMDB> movieData = null;
 
