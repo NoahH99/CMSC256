@@ -12,11 +12,14 @@ import java.util.function.Predicate;
 
 /**
  * Created by Noah Hendrickson on 01/28/2023
- * <br>
+ *
+ * SortingLab class is the main class that demonstrates the usage of the {@link ActorComparator} class
+ * and the `filterMovieData` method.
  * <p>
- * The SortingLab class is the main class that runs the program.
- * It is responsible for initializing the Bridges API, filtering and sorting
- * the movie data, and printing out the results.
+ * The program takes in two command line arguments, a Bridges API username and API key, and uses them to
+ * connect to the Bridges API and retrieve a list of {@link ActorMovieIMDB} objects. The program then filters
+ * the list based on a specific movie title and sorts the resulting list by the actor's first name using
+ * the {@link ActorComparator} class. The filtered and sorted list is then printed to the console.
  * </p>
  */
 public class SortingLab {
@@ -49,16 +52,13 @@ public class SortingLab {
     }
 
     /**
-     * Filters a collection of movie data based on a given predicate.
+     * Filters a collection of {@link ActorMovieIMDB} objects based on a given predicate and returns a new list
+     * containing the filtered objects.
      *
-     * <p>
-     * <b>Note:</b> The type of movie data being filtered must extend ActorMovieIMDB.
-     * </p>
-     *
-     * @param <T> the type of movie data being filtered, must extend ActorMovieIMDB
-     * @param movieData the collection of movie data to be filtered
-     * @param filter the predicate used to filter the movie data
-     * @return a list of filtered movie data
+     * @param movieData the collection of {@link ActorMovieIMDB} objects to filter
+     * @param filter the predicate to use for filtering
+     * @param <T> type parameter that extends {@link ActorMovieIMDB}
+     * @return a new list containing the filtered {@link ActorMovieIMDB} objects
      */
     private static <T extends ActorMovieIMDB> List<T> filterMovieData(Collection<T> movieData, Predicate<T> filter) {
         List<T> filtered = new ArrayList<>();
@@ -73,11 +73,12 @@ public class SortingLab {
     }
 
     /**
-     * Initializes the Bridges API with the given username and application ID.
+     * Initializes a connection to the Bridges API using the given username and API key and retrieves a list of
+     * {@link ActorMovieIMDB} objects.
      *
      * @param username the Bridges API username
-     * @param applicationId the Bridges API application ID
-     * @return the movie data retrieved from the Bridges API
+     * @param applicationId the Bridges API key
+     * @return a list of {@link ActorMovieIMDB} objects retrieved from the Bridges API
      */
     private static List<ActorMovieIMDB> initBridgesAPI(String username, String applicationId) {
         Bridges bridges = new Bridges(3, username, applicationId);
