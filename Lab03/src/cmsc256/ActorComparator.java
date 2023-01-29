@@ -4,6 +4,9 @@ import bridges.data_src_dependent.ActorMovieIMDB;
 
 import java.util.Comparator;
 
+/**
+ * Created by Noah Hendrickson on 01/28/2023
+ */
 public class ActorComparator<T extends ActorMovieIMDB> implements Comparator<T> {
 
     @Override
