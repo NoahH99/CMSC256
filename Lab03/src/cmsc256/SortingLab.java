@@ -12,7 +12,7 @@ import java.util.function.Predicate;
 
 /**
  * Created by Noah Hendrickson on 01/28/2023
- *
+ * </br>
  * SortingLab class is the main class that demonstrates the usage of the {@link ActorComparator} class
  * and the `filterMovieData` method.
  * <p>
@@ -40,7 +40,7 @@ public class SortingLab {
         ActorMovieIMDB entry;
         for (int i = 0; i < 5; i++) {
             entry = movieData.get(i);
-            System.out.println(i + ".  " + entry.getActor() + " was in " + entry.getMovie());
+            System.out.println(i + ". " + entry.getActor() + " was in " + entry.getMovie());
         }
 
         List<ActorMovieIMDB> filteredMovieData = filterMovieData(movieData, data -> data.getMovie().equals("Being_John_Malkovich_(1999)"));
