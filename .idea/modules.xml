@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CMSC256.iml" filepath="$PROJECT_DIR$/CMSC256.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Classwork/Classwork.iml" filepath="$PROJECT_DIR$/Classwork/Classwork.iml" />
       <module fileurl="file://$PROJECT_DIR$/Lab00/Lab00.iml" filepath="$PROJECT_DIR$/Lab00/Lab00.iml" />
       <module fileurl="file://$PROJECT_DIR$/Lab01/Lab01.iml" filepath="$PROJECT_DIR$/Lab01/Lab01.iml" />
       <module fileurl="file://$PROJECT_DIR$/Lab02/Lab02.iml" filepath="$PROJECT_DIR$/Lab02/Lab02.iml" />
