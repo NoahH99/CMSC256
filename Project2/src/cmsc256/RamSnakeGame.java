@@ -5,11 +5,13 @@ import bridges.base.NamedSymbol;
 import bridges.games.NonBlockingGame;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class RamSnakeGame extends NonBlockingGame {
     static int[] boardSize = {15, 15};                 // controls board size (rows, cols)
-    private static NamedColor[] colorList = new NamedColor[]{NamedColor.blue};  // colors for snake
+    private static NamedColor[] colorList = new NamedColor[(int) Arrays.stream(NamedColor.values()).filter(c -> !c.name().toLowerCase().contains("green")).count()];  // colors for snake
     private static final int ASSIGNMENT_NUMBER = 2;
     private NamedColor backgroundColor;     // background color
     private ArrayList<int[]> snake;         //location of all snake parts
@@ -22,6 +24,16 @@ public class RamSnakeGame extends NonBlockingGame {
     private int[] lastPos = {0, 0};
     private int[] temp;
     private Random randomGenerator = new Random();
+    private List<NamedColor> colors;
+
+    static {
+        int i = 0;
+        for (NamedColor value : NamedColor.values()) {
+            if (value.name().toLowerCase().contains("green")) continue;
+
+            colorList[i++] = value;
+        }
+    }
 
     //constructor
     public RamSnakeGame(int assid, String login, String apiKey, int r, int c) {
@@ -32,11 +44,14 @@ public class RamSnakeGame extends NonBlockingGame {
         setDescription("A simple snake game in Java using the Bridges api.");
         // initialize background color
         backgroundColor = NamedColor.green;
+
+        this.colors = new ArrayList<>();
+
         // start the game engine
         start();
     }
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         //enter your username and api key here
         RamSnakeGame mg = new RamSnakeGame(ASSIGNMENT_NUMBER, args[0], args[1],
                 boardSize[0], boardSize[1]);
@@ -60,9 +75,12 @@ public class RamSnakeGame extends NonBlockingGame {
         //reset snake and moves Lists with an empty list
         snake = new ArrayList<>();
         moves = new ArrayList<>();
+        colors = new ArrayList<>();
+
         //add some parts to snake
         for (int i = 5; i >= 2; i--) {
             snake.add(new int[]{5, i});
+            colors.add(colorList[randomGenerator.nextInt(colorList.length)]);
         }
         //add moves for each snake part
         for (int i = 0; i < 4; i++) {
@@ -79,8 +97,9 @@ public class RamSnakeGame extends NonBlockingGame {
         // Use a loop to tranverse the Snake arraylist and
         // draw the snake on all the tiles
 
-        for (int[] parts : snake) {
-            setBGColor(parts[0], parts[1], colorList[randomGenerator.nextInt(colorList.length)]);
+        for (int i = 0; i < snake.size(); i++) {
+            int[] parts = snake.get(i);
+            setBGColor(parts[0], parts[1], colors.get(i));
         }
 
         //draw in the apple using an apple symbol
@@ -185,6 +204,7 @@ public class RamSnakeGame extends NonBlockingGame {
             //update snake and apple on screen
             draw();
         }
+
         //if game is over and space key is pressed the restart the game
         if (gameOver && keySpace())
             initialize();
@@ -214,6 +234,7 @@ public class RamSnakeGame extends NonBlockingGame {
                 - snake.get(snake.size() - 1)[1]);
         //add new part to snake
         snake.add(temp);
+        colors.add(colorList[randomGenerator.nextInt(colorList.length)]);
         //creates new move to correspond with new part of the snake
         temp = new int[2];
         temp[0] = moves.get(moves.size() - 1)[0];
