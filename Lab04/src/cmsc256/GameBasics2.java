@@ -74,7 +74,7 @@ class GameBasics2 extends NonBlockingGame {
     @Override
     protected void gameLoop() {
         if (!playGame) {
-            if (keyUp()) {
+            if (keySpace()) {
                 playGame = true;
                 initialize();
             }
@@ -109,6 +109,7 @@ class GameBasics2 extends NonBlockingGame {
                     drawSymbol(row, col, NamedSymbol.none, NamedColor.blue);
                 } else {
                     setBGColor(row, col, NamedColor.lightgray);
+                    drawSymbol(row, col, NamedSymbol.none, NamedColor.lightgray);
                 }
             }
         }
@@ -135,6 +136,48 @@ class GameBasics2 extends NonBlockingGame {
 
         setBGColor(row, col, NamedColor.blue);
         drawSymbol(row, col, NamedSymbol.bomb, NamedColor.black);
+
+        for (int row = 0; row < getBoardHeight(); row++) {
+            for (int col = 0; col < getBoardWidth(); col++) {
+                if (!isTouchingEdge(row, col)) setBGColor(row, col, NamedColor.red);
+            }
+        }
+
+        drawMessage("Game Over\nPress Space to continue");
+    }
+
+    /**
+     * Draws a message on the game board.
+     *
+     * @param message The message to be displayed on the game board.
+     */
+    private void drawMessage(String message) {
+        String[] split = message.split("\n");
+        int splitLength = split.length;
+        int x;
+        int y = (getBoardHeight() / 2) - splitLength;
+        NamedSymbol symbol;
+
+        for (String s : split) {
+            char[] letters = s.toCharArray();
+            x = (getBoardWidth() / 2) - (letters.length / 2);
+
+            for (char c : letters) {
+                try {
+                    if (!Character.isAlphabetic(c)) {
+                        x++;
+                        continue;
+                    }
+
+                    symbol = NamedSymbol.valueOf(Character.toString(c).toUpperCase());
+                    drawSymbol(y, x++, symbol, NamedColor.black);
+                } catch (IllegalArgumentException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            y++;
+        }
     }
 
     /**
