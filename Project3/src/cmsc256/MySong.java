@@ -4,69 +4,32 @@ import bridges.data_src_dependent.Song;
 
 /**
  * Created by Noah Hendrickson on 2/18/23
- *
- * The MySong class represents a song, and holds information about its title, artist, album, release date, and lyrics.
- * The class implements the Comparable interface to allow for sorting of MySong objects by song title.
+ * <p>
+ * The MySong class is a wrapper for the {@link bridges.data_src_dependent.Song} class.
+ * The class implements the {@link java.lang.Comparable} interface to allow for sorting of {@link cmsc256.MySong}
+ * objects by song title.
  */
-public class MySong implements Comparable<MySong> {
-
-    private String title;
-    private String artist;
-    private String album;
-    private String releaseDate;
-    private String lyrics;
+public class MySong extends Song implements Comparable<MySong> {
 
     public MySong() {
         super();
     }
 
-    public MySong(String title) {
-        this.title = title;
-    }
-
-    public MySong(String title, String artist, String album, String releaseDate, String lyrics) {
-        this.title = title;
-        this.artist = artist;
-        this.album = album;
-        this.releaseDate = releaseDate;
-        this.lyrics = lyrics;
+    public MySong(String artist, String song, String album, String lyrics, String release_date) {
+        super(artist, song, album, lyrics, release_date);
     }
 
     public MySong(Song song) {
-        this.title = song.getSongTitle();
-        this.artist = song.getArtist();
-        this.album = song.getAlbumTitle();
-        this.releaseDate = song.getReleaseDate();
-        this.lyrics = song.getLyrics();
+        super(song.getArtist(), song.getSongTitle(), song.getAlbumTitle(), song.getLyrics(), song.getReleaseDate());
     }
 
     @Override
     public int compareTo(MySong o) {
-        return this.title.compareTo(o.title);
+        return super.getSongTitle().compareTo(o.getSongTitle());
     }
 
     @Override
     public String toString() {
-        return "Title: " + title + "   Album: " + album + "\n";
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getArtist() {
-        return artist;
-    }
-
-    public String getAlbum() {
-        return album;
-    }
-
-    public String getReleaseDate() {
-        return releaseDate;
-    }
-
-    public String getLyrics() {
-        return lyrics;
+        return "Title: " + super.getSongTitle() + " Album: " + super.getAlbumTitle();
     }
 }

@@ -14,31 +14,19 @@ public class Main {
     private final SongList songs = new SongList();
 
     private Main(String username, String apiKey) throws IOException {
+        long startTime = System.currentTimeMillis();
         initSongList(username, apiKey);
+        long endTime = System.currentTimeMillis() - startTime;
+        System.out.println("Time to initialize song list: " + endTime + "ms");
     }
 
     public static void main(String[] args) throws IOException {
         Main main = new Main(args[0], args[1]);
 
-        System.out.println(main.getSongsByArtist("The Beatles"));
-        System.out.println(main.getSongsByArtist("Queen"));
-    }
-
-    private String getSongsByArtist(String artist) {
-        StringBuilder builder = new StringBuilder();
-
-        songs.sortOnTitle();
-        for (MySong song : songs) {
-            if (song.getArtist().equals(artist)) {
-                builder.append(song);
-            }
-        }
-
-        if (builder.length() == 0) {
-            builder.append("There are no songs by ").append(artist).append(" in this playlist.");
-        }
-
-        return builder.toString();
+        System.out.println(main.songs.getSongsByArtist("Lin-Manuel Miranda"));
+//        System.out.println(main.songs.getSongsByArtist("kjdfkjsfs"));
+//        main.songs.clear();
+//        System.out.println(main.songs.getSongsByArtist("Lin-Manuel Miranda"));
     }
 
     private void initSongList(String username, String apiKey) throws IOException {
