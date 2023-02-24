@@ -21,9 +21,19 @@ public class Main {
     }
 
     public static void main(String[] args) throws IOException {
-        Main main = new Main(args[0], args[1]);
+        Main main = new Main("hendricksonnl", "1368311943022");
+        main.songs.clear();
+        main.songs.add(new MySong("Example Artist", "Example Song 1", "Example Album 1", "", ""));
+        main.songs.add(new MySong("Example Artist", "Example Song 2", "Example Album 2", "", ""));
+        main.songs.add(new MySong("Example Artist 2", "Example Song 3", "Example Album 3", "", ""));
+        main.songs.add(new MySong("Example Artist 2", "Example Song 4", "Example Album 4", "", ""));
+        main.songs.add(new MySong("Example Artist", "Example Song 5", "Example Album 5", "", ""));
+        main.songs.add(new MySong("Example Artist", "Example Song 6", "Example Album 6", "", ""));
+        main.songs.add(new MySong("Example Artist 2", "Example Song 7", "Example Album 7", "", ""));
+        main.songs.add(new MySong("Example Artist", "Example Song 8", "Example Album 8", "", ""));
 
         System.out.println(main.songs.getSongsByArtist("Lin-Manuel Miranda"));
+        System.out.println(main.songs.getSongsByArtist("Example Artist"));
 //        System.out.println(main.songs.getSongsByArtist("kjdfkjsfs"));
 //        main.songs.clear();
 //        System.out.println(main.songs.getSongsByArtist("Lin-Manuel Miranda"));

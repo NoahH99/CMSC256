@@ -136,10 +136,48 @@ public class SongList implements List<MySong>, Iterable<MySong> {
      * @return a formatted string of all songs by a specific artist in this playlist, sorted alphabetically by title
      */
     public String getSongsByArtist(String artist) {
+        Pair<Integer, MySong[]> songsByArtists = getSongsByArtists(artist);
+        Integer indexOfLastMatchedSong = songsByArtists.first;
+        MySong[] songs = songsByArtists.second;
+
+        bubbleSort(songs, indexOfLastMatchedSong);
+        String songsAsString = getSongsAsString(songs, indexOfLastMatchedSong);
+
+        if (songsAsString.isEmpty())
+            return "There are no songs by " + artist + " in this playlist.";
+
+        return songsAsString;
+    }
+
+    /**
+     * Returns a string representation of an array of {@link cmsc256.MySong} objects.
+     *
+     * @param songs the array of MySong objects to be represented as a string
+     * @param indexOfLastMatchedSong the index of the last matched song
+     * @return a string representation of the array of MySong objects
+     */
+    private String getSongsAsString(MySong[] songs, Integer indexOfLastMatchedSong) {
         StringBuilder builder = new StringBuilder();
 
+        for (int i = 0; i < indexOfLastMatchedSong; i++) {
+            builder.append(songs[i].toString());
+            if (i != indexOfLastMatchedSong - 1) builder.append("\n");
+        }
+
+        return builder.toString();
+    }
+
+
+    /**
+     * Returns an array of MySong objects that match the given artist name.
+     *
+     * @param artist the name of the artist to search for in the array of MySong objects
+     * @return an array of MySong objects that match the given artist name
+     */
+    private Pair<Integer, MySong[]> getSongsByArtists(String artist) {
         MySong[] songs = new MySong[size];
         int index = 0;
+
         for (MySong song : this) {
             if (song.getArtist().equalsIgnoreCase(artist)) {
                 artist = song.getArtist();
@@ -147,8 +185,18 @@ public class SongList implements List<MySong>, Iterable<MySong> {
             }
         }
 
-        for (int i = 0; i < index; i++) {
-            for (int j = 0; j < index - 1; j++) {
+        return new Pair<>(index, songs);
+    }
+
+    /**
+     * Sorts an array of MySong objects in ascending order based on their natural ordering.
+     *
+     * @param songs the array of MySong objects to be sorted
+     * @param indexOfLastMatchedSong the index of the last matched song
+     */
+    private void bubbleSort(MySong[] songs, Integer indexOfLastMatchedSong) {
+        for (int i = 0; i < indexOfLastMatchedSong; i++) {
+            for (int j = 0; j < indexOfLastMatchedSong - 1; j++) {
                 if (songs[j].compareTo(songs[j + 1]) > 0) {
                     MySong temp = songs[j];
                     songs[j] = songs[j + 1];
@@ -156,18 +204,6 @@ public class SongList implements List<MySong>, Iterable<MySong> {
                 }
             }
         }
-
-        for (int i = 0; i < index; i++) {
-            builder.append(songs[i].toString());
-            if (i != index - 1) builder.append("\n");
-        }
-
-        if (builder.length() == 0) {
-            builder.append("There are no songs by ").append(artist).append(" in this playlist.");
-            return builder.toString();
-        }
-
-        return "Songs by " + artist + ":\n" + builder;
     }
 
     public String getPlaylistName() {
@@ -196,6 +232,17 @@ public class SongList implements List<MySong>, Iterable<MySong> {
             MySong next = current.getValue();
             current = current.getNext();
             return next;
+        }
+    }
+
+    private static class Pair<A, B> {
+
+        private final A first;
+        private final B second;
+
+        public Pair(A first, B second) {
+            this.first = first;
+            this.second = second;
         }
     }
 }
