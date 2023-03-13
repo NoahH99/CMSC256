@@ -10,7 +10,7 @@ public class ArrayBasedStack<T> implements StackInterface<T> {
     private static final int INITIAL_CAPACITY = 5;
 
     private T[] data;
-    private int indexOfTopOfStack;
+    private int topOfStack;
 
     public ArrayBasedStack() {
         this(INITIAL_CAPACITY);
@@ -20,38 +20,38 @@ public class ArrayBasedStack<T> implements StackInterface<T> {
         if (capacity <= 0) throw new IllegalArgumentException("Array initial size error.");
 
         this.data = (T[]) new Object[capacity];
-        this.indexOfTopOfStack = -1;
+        this.topOfStack = -1;
     }
 
     @Override
     public void push(T newEntry) {
         if (isArrayFull()) expandArray();
-        data[++indexOfTopOfStack] = newEntry;
+        data[++topOfStack] = newEntry;
     }
 
     @Override
     public T pop() {
         if (isEmpty()) throw new EmptyStackException();
-        T item = data[indexOfTopOfStack];
-        data[indexOfTopOfStack--] = null;
+        T item = data[topOfStack];
+        data[topOfStack--] = null;
         return item;
     }
 
     @Override
     public T peek() {
         if (isEmpty()) throw new EmptyStackException();
-        return data[indexOfTopOfStack];
+        return data[topOfStack];
     }
 
     @Override
     public boolean isEmpty() {
-        return indexOfTopOfStack < 0;
+        return topOfStack < 0;
     }
 
     @Override
     public void clear() {
-        this.data = (T[]) new Object[INITIAL_CAPACITY];
-        this.indexOfTopOfStack = -1;
+        data = (T[]) new Object[INITIAL_CAPACITY];
+        topOfStack = -1;
     }
 
     private void expandArray() {
@@ -60,6 +60,6 @@ public class ArrayBasedStack<T> implements StackInterface<T> {
     }
 
     private boolean isArrayFull() {
-        return indexOfTopOfStack >= data.length - 1;
+        return topOfStack >= data.length - 1;
     }
 }
